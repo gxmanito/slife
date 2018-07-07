@@ -97,11 +97,13 @@ function getCountStatus(id) {
                 if(id){
                     location.reload();
                 }else{
-                    renderHtml({
-                        targetId: 'account_nav',
-                        template: "/views/common/template/account-nav.html",
-                        htmlData:result
-                    });
+                    if(result.data){
+                        renderHtml({
+                            targetId: 'account_nav',
+                            template: "/views/common/template/account-nav.html",
+                            htmlData:result
+                        });
+                    }
                 }
             }
         }

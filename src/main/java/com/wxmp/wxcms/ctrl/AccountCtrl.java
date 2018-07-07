@@ -64,10 +64,11 @@ public class AccountCtrl extends BaseCtrl {
 		//account存入缓存中
 		if (null != searchEntity && null != searchEntity.getId()) {
 			account = entityService.getById(searchEntity.getId());
-			WxMemoryCacheClient.setAccount(account.getAccount());
+
 		} else {
 			account = entityService.getByAccount(WxMemoryCacheClient.getAccount());
 		}
+		WxMemoryCacheClient.setAccount(account.getAccount());
 		return AjaxResult.success(WxUtil.getAccount(list, account.getName()));
 	}
 }

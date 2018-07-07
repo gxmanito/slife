@@ -19,10 +19,14 @@
 package com.wxmp.wxcms.ctrl;
 
 import com.wxmp.core.common.BaseCtrl;
+import com.wxmp.core.common.Constants;
 import com.wxmp.core.util.AjaxResult;
 import com.wxmp.core.util.MD5Util;
 import com.wxmp.core.util.SessionUtil;
+import com.wxmp.wxapi.process.WxMemoryCacheClient;
+import com.wxmp.wxcms.domain.Account;
 import com.wxmp.wxcms.domain.SysUser;
+import com.wxmp.wxcms.service.AccountService;
 import com.wxmp.wxcms.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,7 +48,8 @@ public class SysUserCtrl extends BaseCtrl {
 
 	@Autowired
 	private SysUserService sysUserService;
-
+	@Autowired
+	private AccountService accountService;
 	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public AjaxResult login(SysUser user) {
@@ -54,6 +59,11 @@ public class SysUserCtrl extends BaseCtrl {
 			return AjaxResult.failure("用户名或者密码错误");
 		}
 		SessionUtil.setUser(sysUser);
+		//设置登陆者默认公众号
+		Account account = accountService.getSingleAccount();
+		if (account != null) {
+			WxMemoryCacheClient.setAccount(account.getAccount());
+		}
 		return AjaxResult.success(sysUser.getTrueName());
 	}
 

@@ -131,7 +131,6 @@ public class WxCmsCtrl extends BaseCtrl {
 			tmpAccount.setName(account.getName());
 			accountDao.update(tmpAccount);
 		}
-		WxMemoryCacheClient.addMpAccount(account);
 		return AjaxResult.success(account);
 	}
 	

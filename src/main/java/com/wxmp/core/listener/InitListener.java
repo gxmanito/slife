@@ -45,8 +45,8 @@ public class InitListener implements ServletContextListener {
         try {
             //放入公众号
             AccountService accountService = SpringContextHolder.getBean("accountService");
-            Account account = accountService.getSingleAccount();
-            WxMemoryCacheClient.addMpAccount(account);
+            List<Account> accounts = accountService.listForPage(new Account());
+            WxMemoryCacheClient.addMpAccount(accounts);
             //读取所有缓存
             SysConfigService configService = SpringContextHolder.getBean("sysConfigService");
             List<SysConfig> configList = configService.getConfigList();
