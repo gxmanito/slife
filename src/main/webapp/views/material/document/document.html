@@ -313,7 +313,7 @@
             var id = $(this).parent().attr("data-id");
             if (event == "edit") {
                 jump("/material/document/editsingle[id=" + id + "]");
-            } else if (event == "mess") {
+            } else if (event == "mass") {
                 //群发
                 showDialog({
                     title: '群发',
@@ -328,7 +328,7 @@
                             url: '/wxapi/sendNewsByOpenId',
                             data: {
                                 id: id,
-                                "openid": data[0].openId
+                                openid: GLOBAL.choosed[0]
                             },
                             success: function (result) {
                                 if (result.success) {

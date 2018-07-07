@@ -606,6 +606,8 @@ public class WxApiClient {
             } else {
                 jsonObj.put("show_cover_pic", 1);
             }
+            jsonObj.put("need_open_comment", news.getOpencomment());
+            jsonObj.put("only_fans_can_comment", news.getFanscancomment());
             jsonObj.put("content", news.getDescription());
             jsonArr.add(jsonObj);
         }
@@ -652,6 +654,9 @@ public class WxApiClient {
         } else {
             jsonObj.put("show_cover_pic", 1);
         }
+        jsonObj.put("need_open_comment", news.getOpencomment());
+        jsonObj.put("only_fans_can_comment", news.getFanscancomment());
+
         jsonObj.put("content", news.getDescription());
         
         JSONObject postObj = new JSONObject();
@@ -673,52 +678,6 @@ public class WxApiClient {
         postObj.put("index", index);
         postObj.put("articles", jsonObj);
         JSONObject rstObj = WxApi.httpsRequest(WxApi.getUpdateNewsMaterialUrl(accessToken), HttpMethod.POST, postObj.toString());
-        if (WxUtil.isWxError(rstObj)) {
-            throw new WxErrorException(WxError.fromJson(rstObj));
-        }
-        return rstObj;
-    }
-    
-    // 新增多图文永久素材
-    public static JSONObject addMoreNewsMaterial(List<MsgNews> msgNewsList, MpAccount mpAccount)
-        throws Exception {
-        String accessToken = getAccessToken(mpAccount);
-        JSONArray jsonArr = new JSONArray();
-        for (MsgNews news : msgNewsList) {
-            JSONObject jsonObj = new JSONObject();
-            // 上传图片素材
-            jsonObj.put("thumb_media_id", news.getThumbMediaId());
-            if (news.getAuthor() != null) {
-                jsonObj.put("author", news.getAuthor());
-            } else {
-                jsonObj.put("author", "");
-            }
-            if (news.getTitle() != null) {
-                jsonObj.put("title", news.getTitle());
-            } else {
-                jsonObj.put("title", "");
-            }
-            if (news.getFromurl() != null) {
-                jsonObj.put("content_source_url", news.getFromurl());
-            } else {
-                jsonObj.put("content_source_url", "");
-            }
-            if (news.getBrief() != null) {
-                jsonObj.put("digest", news.getBrief());
-            } else {
-                jsonObj.put("digest", "");
-            }
-            if (news.getShowpic() != null) {
-                jsonObj.put("show_cover_pic", news.getShowpic());
-            } else {
-                jsonObj.put("show_cover_pic", 1);
-            }
-            jsonObj.put("content", news.getDescription());
-            jsonArr.add(jsonObj);
-        }
-        JSONObject postObj = new JSONObject();
-        postObj.put("articles", jsonArr);
-        JSONObject rstObj = WxApi.httpsRequest(WxApi.getNewsMaterialUrl(accessToken), HttpMethod.POST, postObj.toString());
         if (WxUtil.isWxError(rstObj)) {
             throw new WxErrorException(WxError.fromJson(rstObj));
         }
