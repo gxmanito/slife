@@ -265,7 +265,7 @@ table.weixin-form td{
     margin:10px 0;
 }
 .form-item dl dt{
-    width:90px;
+    width:115px;
     height: 30px;
     line-height: 30px;
     text-align: right;
@@ -279,7 +279,7 @@ table.weixin-form td{
 .form-item dl dd{
     position:relative;
     display:block;
-    margin-left: 90px;
+    margin-left: 115px;
     line-height: 30px;
 }
 .form-item .input-box {
